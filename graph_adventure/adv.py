@@ -20,8 +20,62 @@ world.printRooms()
 player = Player("Name", world.startingRoom)
 
 
-# FILL THIS IN
-traversalPath = ['n', 's']
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+
+class Stack():
+    def __init__(self):
+        self.stack = []
+    def push(self, value):
+        self.stack.append(value)
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.stack)
+
+traversalPath = []
+visited = {0: {"n":"?", "e":"?", "s":"?", "w":"?" }} # starting graph
+path = []
+flipped_directions = { 'n':'s', 's':'n', 'e':'w', 'w':'e' }
+
+while len(visited) < 500: # when visited is less than number of rooms...
+    current_exits = visited[player.currentRoom.id] # sets the current exit for the current visited room
+
+    unexplored_exits = [] # unexplored exits
+    for exit in player.currentRoom.getExits(): # for exit in the list of exits for the current room
+        if current_exits[exit] == '?': # look for ? (exit) instead of a vertex
+            unexplored_exits.append(exit) # add the exit onto the unexplored list
+
+    if len(unexplored_exits) > 0: # if the unexplored list of exits is not empty...
+        prev_room = player.currentRoom.id # the current room is set as the previous
+        direction = unexplored_exits[0] # the first unexplored exit is now the direction we take
+        player.travel(direction) # player goes to the direction
+        traversalPath.append(direction) # add the direction to the traversed path
+        path.append(direction) # add the direction to the path
+
+        entered_room = player.currentRoom.id # the current room is now set as the entered room.
+        print(f'Going to direction: {direction} - Current Room: {prev_room} - Next room number: {entered_room}')
+
+        if entered_room not in visited: # if the entered room has not been visited yet...
+            entered_room_exits = {} # create a dict for exit for the entered room
+            for exit in player.currentRoom.getExits(): # for exit in the current room exits
+                entered_room_exits[exit] = '?' # exit of entered room exits is set to ?
+            visited[entered_room] = entered_room_exits # entered room exits is now a visited room
+
+
 
 
 # TRAVERSAL TEST
