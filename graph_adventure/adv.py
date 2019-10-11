@@ -45,6 +45,7 @@ class Stack():
             return None
     def size(self):
         return len(self.stack)
+        
 
 traversalPath = []
 visited = {0: {"n":"?", "e":"?", "s":"?", "w":"?" }} # starting graph
