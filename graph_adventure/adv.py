@@ -85,7 +85,7 @@ while len(visited) < 500:  # when visited is less than number of rooms...
             entered_room_exits = {}  # create a dict for exit for the entered room
             for exit in player.currentRoom.getExits():  # for exit in the current room exits
                 # exit of entered room exits is set to ?
-                entered_room_exits[exit] = '?'
+                entered_room_exits[exit] = '?' # setting the ? makes the not explore
             # entered room exits is now a visited room
             visited[entered_room] = entered_room_exits
 
@@ -102,7 +102,6 @@ while len(visited) < 500:  # when visited is less than number of rooms...
             player.travel(go_back)  # player goes back
             # the back is not appended to the traversal path
             traversalPath.append(go_back)
-
 
 # TRAVERSAL TEST
 visited_rooms = set()
